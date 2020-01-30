@@ -1,6 +1,6 @@
 // nodeのコアモジュールのhttpを使う
 var http = require("http");
-
+var data
 
 http.createServer(function (req, res) {
     if (req.method === 'GET') {
