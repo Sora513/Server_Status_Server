@@ -17,7 +17,7 @@ http.createServer(function (req, res) {
 
             })
     }
-}).listen(513);
+}).listen(3000);
 
 
 // サーバを待ち受け状態にする
