@@ -6,7 +6,9 @@ var data = "n"
 //生死確認の閾値
 var threshold = 30;
 
-var ServerName = []
+var isDeadTF = [];
+
+var ServerName = [];
 
 var Network = []
 var Network_in = ""
@@ -46,6 +48,7 @@ function setup() {
             for (var i = 0; i < table.length; i++) {
                 ServerName.push(table[0].Tables_in_Server_db)
                 lastaccess.push(time)
+                isDeadTF.push(false)
             }
         }
     });
@@ -62,7 +65,11 @@ function isDead(){
     for(var i=0 ;i <lastaccess.length; i++){
         if((time - lastaccess[i])>threshold){
             //死んだときにする処理
-            console.log("ALART:Server Named "+ServerName[i]+" may DEAD!!")
+            if(isDeadTF[i]===false){
+                //一回だけする処理
+                console.log("ALART:Server Named "+ServerName[i]+" may DEAD!!")
+                isDeadTF[i]=true;
+            }
         }
     }
 }
@@ -120,8 +127,15 @@ http.createServer(function (req, res) {
                     DiskF = []
 
                 } else {
-                    ServerName.push(data.Name)
+                    var date = new Date();
+                    var a = date.getTime();
+                    // 秒単位タイムスタンプ
+                    var time = Math.floor(a / 1000);
 
+                    ServerName.push(data.Name)
+                    lastaccess.push(time)
+                    isDeadTF.push(false)
+                    
                     for (var i = 0; i < data.NetworkIO.length; i++) {
                         Network[i] = data.NetworkIO[i].Name
                         Network_in += "`Network_in_" + Network[i] + "` float unsigned NOT NULL,"
