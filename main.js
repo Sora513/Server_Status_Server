@@ -85,6 +85,7 @@ http.createServer(function (req, res) {
         req.on('data', function (chunk) { data += chunk })
             .on('end', function () {
                 //data = JSON.parse(data);
+                data = data.replace("/","_")
                 data = JSON.parse(data.slice(1));
                 res.end();
 
@@ -135,7 +136,7 @@ http.createServer(function (req, res) {
                     ServerName.push(data.Name)
                     lastaccess.push(time)
                     isDeadTF.push(false)
-                    
+
                     for (var i = 0; i < data.NetworkIO.length; i++) {
                         Network[i] = data.NetworkIO[i].Name
                         Network_in += "`Network_in_" + Network[i] + "` float unsigned NOT NULL,"
