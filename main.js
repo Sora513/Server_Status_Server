@@ -24,7 +24,8 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: 'localhost',
     user: 'me',
-    password: 'secret'
+    password: 'secret',
+    database: 'Server_db'
 });
 
 //初回起動
