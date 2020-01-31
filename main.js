@@ -66,12 +66,12 @@ http.createServer(function (req, res) {
                         Network_out += data.NetworkIO[i].TX + ","
                     }
                     for (var i = 0; i < data.DiskIO.length; i++) {
-                        Disk_in += data.DiscIO[i].IOReadPS + ","
-                        Disk_out += data.DiscIO[i].IOWritePS + ","
+                        Disk_in += data.DiskIO[i].IOReadPS + ","
+                        Disk_out += data.DiskIO[i].IOWritePS + ","
                     }
                     for (var i = 0; i < data.DiskFree.length; i++) {
-                        Disk_Total += data.DiscFree.DiskTotal + ","
-                        Disk_Free += data.DiscFree.DiskFree + ","
+                        Disk_Total += data.DiskFree.DiskTotal + ","
+                        Disk_Free += data.DiskFree.DiskFree + ","
                     }
                     for (var item in data.RAM) {
                         RAM += data.item + ",";
