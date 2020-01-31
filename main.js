@@ -73,7 +73,7 @@ http.createServer(function (req, res) {
                         Disk_Free += "'"+data.DiskFree.DiskFree +"'"+ ","
                     }
                     for (var item in data.RAM) {
-                        RAM +="'"+ data.item +"'"+ ",";
+                        RAM +="'"+ data.RAM.item +"'"+ ",";
                     }
                     connection.query("INSERT INTO " + data.Name + " VALUE ('" + time + "'," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + data.CPU_IOWait + ");")
                     Network_in = []
