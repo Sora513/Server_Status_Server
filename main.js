@@ -3,6 +3,9 @@ var http = require("http");
 //parseする用
 var data = "n"
 
+//生死確認の閾値
+var threshold = 30;
+
 var ServerName = []
 
 var Network = []
@@ -19,6 +22,9 @@ var Disk_Free = ""
 
 var RAM = ""
 
+var lastaccess =[]
+
+
 //MySQL
 var mysql = require('mysql');
 var connection = mysql.createConnection({
@@ -32,15 +38,34 @@ var connection = mysql.createConnection({
 function setup() {
     connection.query('SHOW tables;', function (err, table, fields) {
         if (err) { console.log('err: ' + err); } else {
-            console.log(table[0].Tables_in_Server_db);
+            var date = new Date();
+            var a = date.getTime();
+            // 秒単位タイムスタンプ
+            var time = Math.floor(a / 1000);
+
             for (var i = 0; i < table.length; i++) {
                 ServerName.push(table[0].Tables_in_Server_db)
+                lastaccess.push(time)
             }
         }
     });
 }
 
 setup();
+
+function isDead(){
+    var date = new Date();
+    var a = date.getTime();
+    // 秒単位タイムスタンプ
+    var time = Math.floor(a / 1000);
+
+    for(var i ;i <lastaccess.length; i++){
+        if(time - lastaccess[i]>threshold){
+            //死んだときにする処理
+            console.log("ALART:Server Named"+ServerName[i]+"may DEAD!!")
+        }
+    }
+}
 
 http.createServer(function (req, res) {
     if (req.method === 'GET') {
@@ -64,6 +89,9 @@ http.createServer(function (req, res) {
                     var a = date.getTime();
                     // 秒単位タイムスタンプ
                     var time = Math.floor(a / 1000);
+
+                    lastaccess[ServerName.indexOf(data.Name)] = time
+                    
                     for (var i = 0; i < data.NetworkIO.length; i++) {
                         Network_in += "'" + data.NetworkIO[i].RX + "'" + ","
                         Network_out += "'" + data.NetworkIO[i].TX + "'" + ","
@@ -130,6 +158,7 @@ http.createServer(function (req, res) {
     }
 }).listen(3000);
 
+setInterval(isDead(),1000)
 
 // サーバを待ち受け状態にする
 // 第1引数: ポート番号
