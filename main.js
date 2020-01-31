@@ -85,7 +85,7 @@ http.createServer(function (req, res) {
         req.on('data', function (chunk) { data += chunk })
             .on('end', function () {
                 //data = JSON.parse(data);
-                data = JSON.parse(data.slice(1));k
+                data = JSON.parse(data.slice(1));
                 res.end();
 
                 //MariaDBにDataを入れていく
