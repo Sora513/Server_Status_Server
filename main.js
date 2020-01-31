@@ -158,7 +158,7 @@ http.createServer(function (req, res) {
     }
 }).listen(3000);
 
-setInterval(isDead(),1000)
+setInterval(isDead,1000)
 
 // サーバを待ち受け状態にする
 // 第1引数: ポート番号
