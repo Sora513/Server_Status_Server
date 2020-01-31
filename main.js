@@ -85,7 +85,7 @@ http.createServer(function (req, res) {
         req.on('data', function (chunk) { data += chunk })
             .on('end', function () {
                 //data = JSON.parse(data);
-                data = data.replace("/","_")
+                data = data.replace(/\//g,"_")
                 data = JSON.parse(data.slice(1));
                 res.end();
 
