@@ -91,23 +91,23 @@ http.createServer(function (req, res) {
 
                     for (var i = 0; i < data.NetworkIO.length; i++) {
                         Network[i] = data.NetworkIO[i].Name
-                        Network_in += "`Network_in_" + Network[i] + "`float unsigned NOT NULL,"
-                        Network_out += "`Network_out_" + Network[i] + "`float unsigned NOT NULL,"
+                        Network_in += "`Network_in_" + Network[i] + "` float unsigned NOT NULL,"
+                        Network_out += "`Network_out_" + Network[i] + "` float unsigned NOT NULL,"
                     }
                     for (var i = 0; i < data.DiskIO.length; i++) {
                         Disk[i] = data.DiskIO[i].Name
-                        Disk_in += "`Disk_in_" + Disk[i] + "`float unsigned NOT NULL,"
-                        Disk_out += "`Disk_out_" + Disk[i] + "`float unsigned NOT NULL,"
+                        Disk_in += "`Disk_in_" + Disk[i] + "` float unsigned NOT NULL,"
+                        Disk_out += "`Disk_out_" + Disk[i] + "` float unsigned NOT NULL,"
                     }
                     for (var i = 0; i < data.DiskFree.length; i++) {
                         DiskF[i] = data.DiskFree[i].Name
-                        Disk_Total += "`Disk_Total_" + Disk[i] + "`int(10) unsigned NOT NULL,"
-                        Disk_Free += "`Disk_Free_" + Disk[i] + "`int(10) unsigned NOT NULL,"
+                        Disk_Total += "`Disk_Total_" + Disk[i] + "` int(10) unsigned NOT NULL,"
+                        Disk_Free += "`Disk_Free_" + Disk[i] + "` int(10) unsigned NOT NULL,"
                     }
                     for (var item in data.RAM) {
                         RAM += "`" + item + "` int(10) NOT NULL,";
                     }
-                    connection.query("CREATE TABLE `" + data.Name + "`(`Time`int(10) unsigned NOT NULL AUTO_INCREMENT,`CPU_IOWait`float NOT NULL," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + ");")
+                    connection.query("CREATE TABLE `" + data.Name + "` (`Time` int(10) unsigned NOT NULL AUTO_INCREMENT,`CPU_IOWait` float NOT NULL," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + ");")
                     Network_in = []
                     Network_out = []
                     Disk_in = []
