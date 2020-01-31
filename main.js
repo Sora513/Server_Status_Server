@@ -32,7 +32,10 @@ var connection = mysql.createConnection({
 function setup() {
     connection.query('SHOW tables;', function (err, table, fields) {
         if (err) { console.log('err: ' + err); } else {
-            console.log(table);
+            console.log(table[0].Tables_in_Server_db);
+            for (var i = 0; i < table.length; i++) {
+                ServerName.push(table[0].Tables_in_Server_db)
+            }
         }
     });
 }
@@ -52,6 +55,7 @@ http.createServer(function (req, res) {
                 //data = JSON.parse(data);
                 data = JSON.parse(data.slice(1));
                 res.end();
+
                 //MariaDBにDataを入れていく
                 if (ServerName.indexOf(data.Name) >= 0) {
                     // 存在する
@@ -61,19 +65,19 @@ http.createServer(function (req, res) {
                     // 秒単位タイムスタンプ
                     var time = Math.floor(a / 1000);
                     for (var i = 0; i < data.NetworkIO.length; i++) {
-                        Network_in += "'"+data.NetworkIO[i].RX +"'"+ ","
-                        Network_out += "'"+data.NetworkIO[i].TX +"'"+ ","
+                        Network_in += "'" + data.NetworkIO[i].RX + "'" + ","
+                        Network_out += "'" + data.NetworkIO[i].TX + "'" + ","
                     }
                     for (var i = 0; i < data.DiskIO.length; i++) {
-                        Disk_in += "'"+data.DiskIO[i].IOReadPS +"'"+ ","
-                        Disk_out +="'"+ data.DiskIO[i].IOWritePS +"'"+ ","
+                        Disk_in += "'" + data.DiskIO[i].IOReadPS + "'" + ","
+                        Disk_out += "'" + data.DiskIO[i].IOWritePS + "'" + ","
                     }
                     for (var i = 0; i < data.DiskFree.length; i++) {
-                        Disk_Total +="'"+ data.DiskFree.DiskTotal +"'"+ ","
-                        Disk_Free += "'"+data.DiskFree.DiskFree +"'"+ ","
+                        Disk_Total += "'" + data.DiskFree[i].DiskTotal + "'" + ","
+                        Disk_Free += "'" + data.DiskFree[i].DiskFree + "'" + ","
                     }
                     for (var item in data.RAM) {
-                        RAM +="'"+ data.RAM[item] +"'"+ ",";
+                        RAM += "'" + data.RAM[item] + "'" + ",";
                     }
                     connection.query("INSERT INTO " + data.Name + " VALUE ('" + time + "'," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + data.CPU_IOWait + ");")
                     Network_in = []
