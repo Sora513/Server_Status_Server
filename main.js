@@ -85,8 +85,7 @@ http.createServer(function (req, res) {
         req.on('data', function (chunk) { data += chunk })
             .on('end', function () {
                 //data = JSON.parse(data);
-                data = data.replace(/\//g,"_")
-                data = JSON.parse(data.slice(1));
+                data = JSON.parse(data.slice(1));k
                 res.end();
 
                 //MariaDBにDataを入れていく
@@ -101,16 +100,22 @@ http.createServer(function (req, res) {
                     lastaccess[ServerName.indexOf(data.Name)] = time
                     
                     for (var i = 0; i < data.NetworkIO.length; i++) {
+                        if(data.NetworkIO[i].Name !== undefined){
                         Network_in += "'" + data.NetworkIO[i].RX + "'" + ","
                         Network_out += "'" + data.NetworkIO[i].TX + "'" + ","
+                        }
                     }
                     for (var i = 0; i < data.DiskIO.length; i++) {
+                        if(data.DiskIO[i].Name !== undefined){
                         Disk_in += "'" + data.DiskIO[i].IOReadPS + "'" + ","
                         Disk_out += "'" + data.DiskIO[i].IOWritePS + "'" + ","
+                        }
                     }
                     for (var i = 0; i < data.DiskFree.length; i++) {
+                        if(data.DiskFree[i].Name !== undefined){
                         Disk_Total += "'" + data.DiskFree[i].DiskTotal + "'" + ","
                         Disk_Free += "'" + data.DiskFree[i].DiskFree + "'" + ","
+                        }
                     }
                     for (var item in data.RAM) {
                         RAM += "'" + data.RAM[item] + "'" + ",";
@@ -138,19 +143,25 @@ http.createServer(function (req, res) {
                     isDeadTF.push(false)
 
                     for (var i = 0; i < data.NetworkIO.length; i++) {
+                        if(data.NetworkIO[i].Name !== undefined){
                         Network[i] = data.NetworkIO[i].Name
                         Network_in += "`Network_in_" + Network[i] + "` float unsigned NOT NULL,"
                         Network_out += "`Network_out_" + Network[i] + "` float unsigned NOT NULL,"
+                        }
                     }
                     for (var i = 0; i < data.DiskIO.length; i++) {
+                        if(data.DiskIO[i].Name !== undefined){
                         Disk[i] = data.DiskIO[i].Name
                         Disk_in += "`Disk_in_" + Disk[i] + "` float unsigned NOT NULL,"
                         Disk_out += "`Disk_out_" + Disk[i] + "` float unsigned NOT NULL,"
+                        }
                     }
                     for (var i = 0; i < data.DiskFree.length; i++) {
+                        if(data.DiskFree[i].Name !== undefined){
                         DiskF[i] = data.DiskFree[i].Name
                         Disk_Total += "`Disk_Total_" + Disk[i] + "` int(10) unsigned NOT NULL,"
                         Disk_Free += "`Disk_Free_" + Disk[i] + "` int(10) unsigned NOT NULL,"
+                        }
                     }
                     for (var item in data.RAM) {
                         RAM += "`" + item + "` int(10) NOT NULL,";
