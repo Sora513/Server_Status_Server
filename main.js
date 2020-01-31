@@ -26,7 +26,6 @@ var connection = mysql.createConnection({
     user: 'me',
     password: 'secret'
 });
-connection.connect();
 
 //初回起動
 function setup() {
@@ -35,7 +34,6 @@ function setup() {
             console.log(table);
         }
     });
-    connection.end();
 }
 
 setup();
@@ -77,7 +75,6 @@ http.createServer(function (req, res) {
                         RAM += data.item + ",";
                     }
                     connection.query("INSERT INTO " + data.Name + " VALUE (" + time + "," + data.CPU_IOWait + "," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + ");")
-                    connection.end();
                     Network_in = []
                     Network_out = []
                     Disk_in = []
@@ -111,7 +108,6 @@ http.createServer(function (req, res) {
                         RAM += "`" + item + "` int(10) NOT NULL,";
                     }
                     connection.query("CREATE TABLE `" + data.Name + "`(`Time`int(10) unsigned NOT NULL AUTO_INCREMENT,`CPU_IOWait`float NOT NULL," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + ");")
-                    connection.end();
                     Network_in = []
                     Network_out = []
                     Disk_in = []
