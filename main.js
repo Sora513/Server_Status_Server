@@ -60,21 +60,21 @@ http.createServer(function (req, res) {
                     // 秒単位タイムスタンプ
                     var time = Math.floor(a / 1000);
                     for (var i = 0; i < data.NetworkIO.length; i++) {
-                        Network_in += data.NetworkIO[i].RX + ","
-                        Network_out += data.NetworkIO[i].TX + ","
+                        Network_in += "'"+data.NetworkIO[i].RX +"'"+ ","
+                        Network_out += "'"+data.NetworkIO[i].TX +"'"+ ","
                     }
                     for (var i = 0; i < data.DiskIO.length; i++) {
-                        Disk_in += data.DiskIO[i].IOReadPS + ","
-                        Disk_out += data.DiskIO[i].IOWritePS + ","
+                        Disk_in += "'"+data.DiskIO[i].IOReadPS +"'"+ ","
+                        Disk_out +="'"+ data.DiskIO[i].IOWritePS +"'"+ ","
                     }
                     for (var i = 0; i < data.DiskFree.length; i++) {
-                        Disk_Total += data.DiskFree.DiskTotal + ","
-                        Disk_Free += data.DiskFree.DiskFree + ","
+                        Disk_Total +="'"+ data.DiskFree.DiskTotal +"'"+ ","
+                        Disk_Free += "'"+data.DiskFree.DiskFree +"'"+ ","
                     }
                     for (var item in data.RAM) {
-                        RAM += data.item + ",";
+                        RAM +="'"+ data.item +"'"+ ",";
                     }
-                    connection.query("INSERT INTO " + data.Name + " VALUE (" + time + "," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + data.CPU_IOWait + ");")
+                    connection.query("INSERT INTO " + data.Name + " VALUE ('" + time + "'," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + data.CPU_IOWait + ");")
                     Network_in = []
                     Network_out = []
                     Disk_in = []
