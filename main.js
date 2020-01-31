@@ -107,6 +107,7 @@ http.createServer(function (req, res) {
                     for (var item in data.RAM) {
                         RAM += "`" + item + "` int(10) NOT NULL,";
                     }
+                    console.log("CREATE TABLE `" + data.Name + "` (`Time` int(10) unsigned NOT NULL AUTO_INCREMENT,`CPU_IOWait` float NOT NULL," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + ");")
                     connection.query("CREATE TABLE `" + data.Name + "` (`Time` int(10) unsigned NOT NULL AUTO_INCREMENT,`CPU_IOWait` float NOT NULL," + Network_in + Network_out + Disk_in + Disk_out + RAM + Disk_Total + Disk_Free + ");")
                     Network_in = []
                     Network_out = []
