@@ -60,7 +60,7 @@ function isDead(){
     var time = Math.floor(a / 1000);
 
     for(var i ;i <lastaccess.length; i++){
-        if(time - lastaccess[i]>threshold){
+        if((time - lastaccess[i])>threshold){
             //死んだときにする処理
             console.log("ALART:Server Named"+ServerName[i]+"may DEAD!!")
         }
